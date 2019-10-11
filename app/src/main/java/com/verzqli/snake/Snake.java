@@ -12,5 +12,20 @@ public class Snake {
     private Direct direct;
     private Direct nextDirect;
     private int steps;
-    private
+
+    public Map getMap() {
+        return map;
+    }
+
+    public Direct getDirect() {
+        return direct;
+    }
+
+    public Direct getNextDirect() {
+        return nextDirect;
+    }
+
+    public int getSteps() {
+        return steps;
+    }
 }
