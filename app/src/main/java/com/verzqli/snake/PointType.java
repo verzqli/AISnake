@@ -11,4 +11,7 @@ public enum  PointType {
     EMPTY ,
     WALL ,
     FOOD ,
+    HEAD ,
+    BODY ,
 }
+

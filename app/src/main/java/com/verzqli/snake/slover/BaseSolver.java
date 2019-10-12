@@ -12,8 +12,8 @@ import com.verzqli.snake.Snake;
  * </pre>
  */
 public abstract class BaseSolver {
-    private Snake snake;
-    private Map map;
+    public Snake snake;
+    public Map map;
     BaseSolver(Snake snake){
         this.snake = snake;
         this.map =snake.getMap();

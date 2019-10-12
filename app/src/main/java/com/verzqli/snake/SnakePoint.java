@@ -31,4 +31,19 @@ public class SnakePoint {
     public void setY(int y) {
         this.y = y;
     }
+
+    public SnakePoint nextSnakePoint(Direct direct){
+        switch (direct) {
+            case UP:
+                return new SnakePoint(x,y-1);
+            case LEFT:
+                return new SnakePoint(x-1,y);
+            case RIGHT:
+                return new SnakePoint(x+1,y);
+            case DOWN:
+                return new SnakePoint(x,y+1);
+            default:
+                return this;
+        }
+    }
 }

@@ -10,9 +10,15 @@ import com.verzqli.snake.Snake;
  *     desc  :
  * </pre>
  */
-public class HamiltonSolver extends BaseSolver{
-    HamiltonSolver(Snake snake) {
+public class HamiltonSolver extends BaseSolver {
+    private PathSolver mPathSolver;
+    public HamiltonSolver(Snake snake) {
         super(snake);
+        mPathSolver = new PathSolver(snake);
+        buildHaniltonCircle();
+    }
+
+    private void buildHaniltonCircle() {
     }
 
     @Override
