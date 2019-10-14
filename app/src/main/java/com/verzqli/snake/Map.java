@@ -1,6 +1,9 @@
 package com.verzqli.snake;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -23,16 +26,16 @@ public class Map {
         mPointTypes = new MapPoint[mRow][mCol];
         for (int i = 0; i < mRow; i++) {
             for (int j = 0; j < mCol; j++) {
-                mPointTypes[i][j]=new MapPoint();
+                mPointTypes[i][j] = new MapPoint();
             }
         }
         for (int i = 0; i < mRow; i++) {
             mPointTypes[i][0].setType(PointType.WALL);
-            mPointTypes[i][col-1].setType(PointType.WALL);
+            mPointTypes[i][col - 1].setType(PointType.WALL);
         }
         for (int i = 0; i < mCol; i++) {
             mPointTypes[0][i].setType(PointType.WALL);
-            mPointTypes[row-1][i].setType(PointType.WALL);
+            mPointTypes[row - 1][i].setType(PointType.WALL);
         }
     }
 
@@ -53,7 +56,7 @@ public class Map {
         return mPointTypes;
     }
 
-    public  MapPoint point(SnakePoint snakePoint){
+    public MapPoint point(SnakePoint snakePoint) {
         return mPointTypes[snakePoint.getX()][snakePoint.getY()];
     }
 
@@ -63,5 +66,18 @@ public class Map {
 
     public int getCol() {
         return mCol;
+    }
+
+    public boolean isSafe(SnakePoint snakePoint) {
+        return isInsideMap(snakePoint) && isSafePoint(snakePoint);
+
+    }
+
+    private boolean isInsideMap(SnakePoint snakePoint) {
+        return snakePoint.getX() > 0 && snakePoint.getY() > 0 && snakePoint.getX() < mRow - 1 && snakePoint.getY() < mCol - 1;
+    }
+
+    public boolean isSafePoint(SnakePoint snakePoint) {
+        return point(snakePoint).getType() == PointType.EMPTY || point(snakePoint).getType() == PointType.FOOD;
     }
 }

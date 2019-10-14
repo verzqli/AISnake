@@ -14,7 +14,7 @@ public enum Direct {
     RIGHT,
     DOWN;
 
-    public Direct opposite(Direct direct) {
+    public static Direct opposite(Direct direct) {
         switch (direct) {
             case UP:
                 return DOWN;

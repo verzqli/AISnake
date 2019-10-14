@@ -23,4 +23,6 @@ public class MapPoint {
     public void setType(PointType type) {
         this.type = type;
     }
+
+
 }

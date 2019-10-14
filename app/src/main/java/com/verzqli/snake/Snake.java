@@ -46,7 +46,7 @@ public class Snake {
         if (direct != null) {
             nextDirect = direct;
         }
-        SnakePoint newHead = getHead().nextSnakePoint(nextDirect);
+        SnakePoint newHead = getHead().nextDirectPoint(nextDirect);
         mSnakeBody.addFirst(newHead);
         if (map.point(newHead).getType() == PointType.FOOD) {
 
@@ -85,5 +85,9 @@ public class Snake {
 
     public int getSteps() {
         return steps;
+    }
+
+    public int getLength() {
+        return mSnakeBody.size();
     }
 }

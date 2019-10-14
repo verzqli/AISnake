@@ -1,7 +1,15 @@
 package com.verzqli.snake.slover;
 
+import android.util.Log;
+
 import com.verzqli.snake.Direct;
+import com.verzqli.snake.HamiltonTableCell;
 import com.verzqli.snake.Snake;
+import com.verzqli.snake.SnakePoint;
+import com.verzqli.snake.TableCell;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <pre>
@@ -12,18 +20,42 @@ import com.verzqli.snake.Snake;
  */
 public class HamiltonSolver extends BaseSolver {
     private PathSolver mPathSolver;
+    private HamiltonTableCell[][] mTableCells;
+
     public HamiltonSolver(Snake snake) {
         super(snake);
         mPathSolver = new PathSolver(snake);
+        int row = snake.getMap().getRow();
+        int col = snake.getMap().getCol();
+
+        mTableCells = new HamiltonTableCell[col][row];
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                mTableCells[i][j] = new HamiltonTableCell();
+            }
+        }
         buildHaniltonCircle();
     }
 
     private void buildHaniltonCircle() {
+        List<Direct> path = mPathSolver.pathTo(snake.getTail(), "aaa");
+        SnakePoint curPoint = snake.getHead();
+        int index = 0;
+        for (Direct direct : path) {
+            mTableCells[curPoint.getX()][curPoint.getY()].setDirect(direct);
+            mTableCells[curPoint.getX()][curPoint.getY()].setIndex(index);
+            curPoint = curPoint.nextDirectPoint(direct);
+            index++;
+        }
+        for (int i = 0,length = snake.getLength(); i <length ; i++) {
+
+        }
+        Log.i(",mmmmmmmm", "buildHaniltonCircle: " + Arrays.toString(path.toArray()));
     }
 
     @Override
     public Direct nextDirect() {
-
         return null;
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -46,8 +47,8 @@ public class MapView extends View {
                         canvas.drawRect(i*(mBodyWith+mSpace),j*(mBodyWith+mSpace),
                                 i*(mBodyWith+mSpace)+mBodyWith,j*(mBodyWith+mSpace)+mBodyWith,mPaint);
                     }else if (content[i][j].getType()==PointType.BODY||content[i][j].getType()==PointType.HEAD){
-                        canvas.drawRect(i*(mBodyWith+mSpace),j*(mBodyWith+mSpace),
-                                i*(mBodyWith+mSpace)+mBodyWith,j*(mBodyWith+mSpace)+mBodyWith,mPaint);
+                        canvas.drawRect(j*(mBodyWith+mSpace),i*(mBodyWith+mSpace),
+                                j*(mBodyWith+mSpace)+mBodyWith,i*(mBodyWith+mSpace)+mBodyWith,mPaint);
                     }
                 }
             }

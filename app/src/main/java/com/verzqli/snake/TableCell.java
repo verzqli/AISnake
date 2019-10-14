@@ -8,7 +8,7 @@ package com.verzqli.snake;
  * </pre>
  */
 public class TableCell {
-    private TableCell parent;
+    private SnakePoint parent;
     private int distance;
     private boolean visit;
 
@@ -16,11 +16,11 @@ public class TableCell {
         reset();
     }
 
-    public TableCell getParent() {
+    public SnakePoint getParent() {
         return parent;
     }
 
-    public void setParent(TableCell parent) {
+    public void setParent(SnakePoint parent) {
         this.parent = parent;
     }
 
@@ -41,9 +41,17 @@ public class TableCell {
     }
 
     public void reset() {
-        this.distance = Integer.MAX_VALUE;
+        this.distance = 1000;
         this.parent = null;
         this.visit = false;
     }
 
+    @Override
+    public String toString() {
+        return "TableCell{" +
+                "parent=" + parent +
+                ", distance=" + distance +
+                ", visit=" + visit +
+                '}';
+    }
 }

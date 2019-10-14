@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
             mSnake.move();
             mapView.invalidate();
-            mHandler.sendMessageDelayed(mHandler.obtainMessage(), 60);
+            mHandler.sendMessageDelayed(mHandler.obtainMessage(), 260);
         }
     };
     private MapView mapView;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mapView = findViewById(R.id.map_view);
-        map = new Map(18, 18);
+        map = new Map(10, 10);
         mSnake=new Snake(map,Direct.RIGHT,initSnakeBody());
         hamiltonSolver=new HamiltonSolver(mSnake);
         mapView.setMap(map);
