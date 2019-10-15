@@ -35,11 +35,11 @@ public class HamiltonSolver extends BaseSolver {
                 mTableCells[i][j] = new HamiltonTableCell();
             }
         }
-        buildHaniltonCircle();
+        buildHamiltonCircle();
     }
 
-    private void buildHaniltonCircle() {
-        List<Direct> path = mPathSolver.pathTo(snake.getTail(), "aaa");
+    private void buildHamiltonCircle() {
+        List<Direct> path = mPathSolver.longestPathToTail();
         SnakePoint curPoint = snake.getHead();
         int index = 0;
         for (Direct direct : path) {
@@ -48,14 +48,21 @@ public class HamiltonSolver extends BaseSolver {
             curPoint = curPoint.nextDirectPoint(direct);
             index++;
         }
-        for (int i = 0,length = snake.getLength(); i <length ; i++) {
-
+        //这里长度要减一是因为蛇头不能算进去 不然会循环跑
+        for (int i = 0, length = snake.getLength(); i < length - 1; i++) {
+            mTableCells[curPoint.getX()][curPoint.getY()].setDirect(snake.getDirect());
+            mTableCells[curPoint.getX()][curPoint.getY()].setIndex(index);
+            curPoint = curPoint.nextDirectPoint(snake.getDirect());
+            index++;
         }
-        Log.i(",mmmmmmmm", "buildHaniltonCircle: " + Arrays.toString(path.toArray()));
+
     }
 
     @Override
     public Direct nextDirect() {
-        return null;
+        SnakePoint head = snake.getHead();
+        Direct nextDirect = mTableCells[head.getX()][head.getY()].getDirect();
+
+        return nextDirect;
     }
 }

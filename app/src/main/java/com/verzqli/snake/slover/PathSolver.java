@@ -26,7 +26,8 @@ import java.util.Queue;
 public class PathSolver extends BaseSolver {
     private TableCell[][] tableCells;
     private int row, col;
-
+    private static final String SHORT_PATH = "SHORT_PATH";
+    private static final String LONG_PATH = "LONG_PATH";
     PathSolver(Snake snake) {
         super(snake);
         row = snake.getMap().getRow();
@@ -42,23 +43,30 @@ public class PathSolver extends BaseSolver {
     }
 
 
-    private List<Direct> longestPathToTail() {
-        return pathTo(snake.getTail(), "longest");
+    public List<Direct> longestPathToTail() {
+        return pathTo(snake.getTail(), LONG_PATH);
     }
 
-//    private List<Direct> shortestPathToTail() {
-//    }
+    public List<Direct> shortPathToFood() {
+        return pathTo(map.getFood(), SHORT_PATH);
+    }
 
-    public List<Direct> pathTo(SnakePoint point, String type) {
+    private List<Direct> pathTo(SnakePoint point, String type) {
         PointType oldType = map.point(point).getType();
         map.point(point).setType(PointType.EMPTY);
-        List<Direct> path = longestPathToPoint(point);
+        List<Direct> path;
+        if (type.equals(SHORT_PATH)) {
+            path = shortestPathToPoint(point);
+        } else {
+            path = longestPathToPoint(point);
+        }
         map.point(point).setType(oldType);
         return path;
     }
 
-    public List<Direct> longestPathToPoint(SnakePoint point) {
+    private List<Direct> longestPathToPoint(SnakePoint point) {
         List<Direct> shortPath = shortestPathToPoint(point);
+        Log.i("TAG", "longestPathToPoint: 最短路径" + Arrays.toString(shortPath.toArray()));
         if (shortPath.size() == 0) {
             return shortPath;
         }
@@ -111,14 +119,14 @@ public class PathSolver extends BaseSolver {
         return shortPath;
     }
 
-    public List<Direct> shortestPathToPoint(SnakePoint endPoint) {
+    private List<Direct> shortestPathToPoint(SnakePoint endPoint) {
         resetTableCell();
         SnakePoint head = snake.getHead();
         tableCells[head.getX()][head.getY()].setDistance(0);
         Deque<SnakePoint> path = new LinkedList<SnakePoint>();
         path.add(head);
         Direct statrDirect;
-        while (path.size()>0) {
+        while (path.size() > 0) {
             SnakePoint curPoint = path.pollFirst();
             if (curPoint.isEqual(endPoint)) {
                 return buildPath(head, endPoint);
@@ -129,23 +137,17 @@ public class PathSolver extends BaseSolver {
                 statrDirect = tableCells[curPoint.getX()][curPoint.getY()].getParent().directToPoint(curPoint);
             }
             SnakePoint[] allDirect = curPoint.allDirect(statrDirect);
-            Log.i("aaa", "当前点: path==  "+path.size());
-            Log.i("aaa", "当前点: "+curPoint.toString());
             for (int i = 0, length = allDirect.length; i < length; i++) {
                 SnakePoint point = allDirect[i];
-                Log.i("aaa", "当前四个点: "+ isValid(point));
                 if (isValid(point)) {
                     TableCell cell = tableCells[point.getX()][point.getY()];
                     if (cell.getDistance() == 1000) {
-                        Log.i("aaa", "当前存在点: "+ point.toString());
                         cell.setParent(curPoint);
                         cell.setDistance(tableCells[point.getX()][point.getY()].getDistance() + 1);
                         path.addLast(point);
                     }
                 }
             }
-            Log.i("aaa", "当前存在点:======================== ");
-
         }
         return new ArrayList<>();
     }
@@ -177,6 +179,8 @@ public class PathSolver extends BaseSolver {
             }
         }
     }
-
+    public void setSnake(Snake snake){
+        this.snake=snake;
+    }
 
 }

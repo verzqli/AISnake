@@ -15,7 +15,9 @@ public class MapPoint {
     public MapPoint() {
         this.type = PointType.EMPTY;
     }
-
+    public MapPoint(PointType type) {
+        this.type =type;
+    }
     public PointType getType() {
         return type;
     }

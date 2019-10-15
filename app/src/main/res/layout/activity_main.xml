@@ -17,37 +17,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         
+        <EditText
+            android:id="@+id/row"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="number"
+            android:hint="输入周长"/>
+        <SeekBar
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:progress="60"
+            android:max="1000"/>
         <Button
-            android:id="@+id/left"
-            android:layout_width="wrap_content"
+            android:id="@+id/reset"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="左" />
-        
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            
-            <Button
-                android:id="@+id/up"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="上" />
-            
-            <Button
-                android:id="@+id/down"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="下" />
-        </LinearLayout>
-        <Button
-            android:id="@+id/right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="右" />
+            android:text="重置"
+            />
     </LinearLayout>
 
 </LinearLayout>

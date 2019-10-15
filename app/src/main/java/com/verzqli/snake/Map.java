@@ -19,11 +19,13 @@ public class Map {
     private int mRow;
     private int mCol;
     private SnakePoint mFood;
+    private int areaLength;
 
     public Map(int row, int col) {
         this.mRow = row;
         this.mCol = col;
         mPointTypes = new MapPoint[mRow][mCol];
+        areaLength = (mCol - 2) * (mRow - 2);
         for (int i = 0; i < mRow; i++) {
             for (int j = 0; j < mCol; j++) {
                 mPointTypes[i][j] = new MapPoint();
@@ -39,17 +41,51 @@ public class Map {
         }
     }
 
-    public SnakePoint createFood() {
-        List<SnakePoint> empty = new ArrayList<>();
+    public Map copy() {
+        Map copy = new Map(mRow, mCol);
         for (int i = 0; i < mRow; i++) {
             for (int j = 0; j < mCol; j++) {
+                copy.mPointTypes[i][j] = new MapPoint(mPointTypes[i][j].getType());
+            }
+        }
+        return copy;
+
+    }
+
+    public SnakePoint createFood() {
+        List<SnakePoint> empty = new ArrayList<>();
+        for (int i = 0; i < mRow - 1; i++) {
+            for (int j = 0; j < mCol - 1; j++) {
                 if (mPointTypes[i][j].getType() == PointType.EMPTY) {
                     empty.add(new SnakePoint(i, j));
+                } else if (mPointTypes[i][j].getType() == PointType.FOOD) {
+                    return null;
                 }
             }
         }
         int length = empty.size();
-        return empty.get(new Random().nextInt(length));
+        if (length > 0) {
+            mFood = empty.get(new Random().nextInt(length));
+            point(mFood).setType(PointType.FOOD);
+            return mFood;
+        } else {
+            return null;
+        }
+    }
+
+    public Boolean haveFood() {
+        return mFood != null;
+    }
+
+    public SnakePoint getFood() {
+        return mFood;
+    }
+
+    public void removeFood() {
+        if (haveFood()) {
+            point(mFood).setType(PointType.EMPTY);
+            mFood = null;
+        }
     }
 
     public MapPoint[][] getContent() {
@@ -79,5 +115,20 @@ public class Map {
 
     public boolean isSafePoint(SnakePoint snakePoint) {
         return point(snakePoint).getType() == PointType.EMPTY || point(snakePoint).getType() == PointType.FOOD;
+    }
+
+    public boolean isFull() {
+        for (int i = 0, rowLength = getRow() - 1; i < rowLength; i++) {
+            for (int j = 0, colLength = getRow() - 1; j < colLength; j++) {
+                if (mPointTypes[i][j].getType() == PointType.EMPTY || mPointTypes[i][j].getType() == PointType.FOOD) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public int getAreaLength() {
+        return areaLength;
     }
 }

@@ -20,8 +20,10 @@ import androidx.annotation.Nullable;
 public class MapView extends View {
     private Map mMap;
     private int mBodyWith = 30;
-    private int mSpace = 0;
+    private int mSpace = 2;
     private Paint mPaint;
+    private Paint mFoodPoint;
+    private Paint mHeadPoint;
     public MapView(Context context) {
         this(context, null);
     }
@@ -34,6 +36,10 @@ public class MapView extends View {
         super(context, attrs, defStyle);
         mPaint=new Paint();
         mPaint.setColor(Color.BLUE);
+        mFoodPoint=new Paint();
+        mFoodPoint.setColor(Color.YELLOW);
+        mHeadPoint=new Paint();
+        mHeadPoint.setColor(Color.RED);
     }
 
     @Override
@@ -46,9 +52,15 @@ public class MapView extends View {
                     if (content[i][j].getType()==PointType.WALL){
                         canvas.drawRect(i*(mBodyWith+mSpace),j*(mBodyWith+mSpace),
                                 i*(mBodyWith+mSpace)+mBodyWith,j*(mBodyWith+mSpace)+mBodyWith,mPaint);
-                    }else if (content[i][j].getType()==PointType.BODY||content[i][j].getType()==PointType.HEAD){
+                    }else if (content[i][j].getType()==PointType.BODY){
                         canvas.drawRect(j*(mBodyWith+mSpace),i*(mBodyWith+mSpace),
                                 j*(mBodyWith+mSpace)+mBodyWith,i*(mBodyWith+mSpace)+mBodyWith,mPaint);
+                    }else if (content[i][j].getType()==PointType.FOOD){
+                        canvas.drawRect(j*(mBodyWith+mSpace),i*(mBodyWith+mSpace),
+                                j*(mBodyWith+mSpace)+mBodyWith,i*(mBodyWith+mSpace)+mBodyWith,mFoodPoint);
+                    }else if (content[i][j].getType()==PointType.HEAD){
+                        canvas.drawRect(j*(mBodyWith+mSpace),i*(mBodyWith+mSpace),
+                                j*(mBodyWith+mSpace)+mBodyWith,i*(mBodyWith+mSpace)+mBodyWith,mHeadPoint);
                     }
                 }
             }
